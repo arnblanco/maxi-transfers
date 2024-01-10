@@ -1,22 +1,82 @@
 <div class="flex flex-column">
   <span class="text-lg mb-4"></span>
 
-  <mat-form-field>
-    <mat-label>Username:</mat-label>
-    <input type="text" matInput placeholder="Username" />
-  </mat-form-field>
+  <mat-card>
+    <mat-card-content>
+      <div class="grid">
+        <form class="grid" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-  <mat-form-field>
-    <mat-label>Password:</mat-label>
-    <input type="password" matInput placeholder="Username password"/>
-  </mat-form-field>
+          <mat-form-field class="col-12 sm:col-6">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              name="first_name"
+              type="text"
+              required
+              formControlName="first_name"
+            />
+          </mat-form-field>
 
-  <button mat-raised-button mat-fla-button color="primary">
-    <mat-icon>person</mat-icon>
-    Login
-  </button>
+          <mat-form-field class="col-12 sm:col-6">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              name="last_name"
+              type="text"
+              required
+              formControlName="last_name"
+            />
+          </mat-form-field>
 
-  <div class="flex justify-content-end mt-5">
-    <a routerLink="/auth/login">User Login</a>
-  </div>
+          <mat-form-field class="col-12 sm:col-12">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              name="email"
+              type="email"
+              required
+              formControlName="email"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="col-12 sm:col-6">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              name="username"
+              type="text"
+              required
+              formControlName="username"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="col-12 sm:col-6">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              name="password"
+              type="password"
+              required
+              formControlName="password"
+            />
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div class="flex justify-content-between">
+        <div class="flex justify-content-end mt-5">
+          <a routerLink="/auth/login">User Login</a>
+        </div>
+        <span></span>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="onSubmit()"
+        >
+          <mat-icon>save</mat-icon>
+          Save
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

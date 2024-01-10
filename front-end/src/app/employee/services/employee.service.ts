@@ -22,7 +22,9 @@ export class EmployeeService {
   ) { }
 
   getEmployee():Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${ this.apiUrl }/employee`)
+    return this.http.get<Employee[]>(
+      `${ this.apiUrl }/employee`,
+    )
   }
 
   getEmployeeById(id: number): Observable<Employee | undefined> {

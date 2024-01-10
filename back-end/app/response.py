@@ -18,7 +18,7 @@ class LoginResponse(BaseModel):
 class EmployeeResponse(BaseModel):
     first_name: str
     last_name: str
-    birthday: str
+    birthday: date
     employee_id: int
     curp: constr(max_length=18)
     ssn: constr(max_length=10)
@@ -30,7 +30,7 @@ class EmployeeResponse(BaseModel):
 class BeneficiaryResponse(BaseModel):
     first_name: str
     last_name: str
-    birthday: str
+    birthday: date
     curp: constr(max_length=18)
     ssn: constr(max_length=10)
     phone: constr(max_length=10)

@@ -1,27 +1,50 @@
 <div class="flex flex-column">
   <span class="text-lg mb-4"></span>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h1>Login</h1>
+  <mat-card>
+    <mat-card-content>
+      <div class="grid">
+        <form class="grid" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" formControlName="username" />
-    </div>
+          <mat-form-field class="col-12 sm:col-12">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              name="username"
+              type="text"
+              required
+              formControlName="username"
+            />
+          </mat-form-field>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" formControlName="password" />
-    </div>
+          <mat-form-field class="col-12 sm:col-12">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              name="password"
+              type="password"
+              required
+              formControlName="password"
+            />
+          </mat-form-field>
+        </form>
+      </div>
 
-    <button mat-raised-button mat-fla-button color="primary">
-      <mat-icon>person</mat-icon>
-      Login
-    </button>
-
-    <div class="flex justify-content-end mt-5">
-      <a routerLink="/auth/new-account">Create new account</a>
-    </div>
-  </form>
+      <div class="flex justify-content-between">
+        <div class="flex justify-content-end mt-5">
+          <a routerLink="/auth/new-account">Create new account</a>
+        </div>
+        <span></span>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="onSubmit()"
+        >
+          <mat-icon>person</mat-icon>
+          Login
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 

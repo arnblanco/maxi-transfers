@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AuthService } from '../../services/auth.service';
+import { UserLogin } from '../../interfaces/user.interface'
 
 
 @Component({
@@ -10,21 +14,40 @@ import { AuthService } from '../../services/auth.service';
   styles: ``
 })
 export class LoginPageComponent {
-  public loginForm: FormGroup;
+  public loginForm = new FormGroup({
+    username: new FormControl<string>(''),
+    password: new FormControl<string>(''),
+  })
 
-  constructor(private authService: AuthService) {
-    this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
-    });
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
+
+  get currentLogin(): UserLogin {
+    const login_data = this.loginForm.value as UserLogin
+    return login_data
   }
 
-  onSubmit() {
-    const { username, password } = this.loginForm.value;
+  onSubmit(): void {
 
-    this.authService.login(username, password)
-      .subscribe({
+    if( this.loginForm.invalid ) {
+      this.showSnackbar('Enter the requested values!')
+      return
+    }
 
-      });
+    this.authService.login( this.currentLogin )
+      .subscribe( user_login => {
+        this.router.navigate(['/'])
+      })
+  }
+
+  showSnackbar( message: string ): void {
+    this.snackbar.open( message, 'done', {
+      duration: 2500
+    })
   }
 }
