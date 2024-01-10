@@ -1,23 +1,27 @@
 <div class="flex flex-column">
   <span class="text-lg mb-4"></span>
 
-  <mat-form-field>
-    <mat-label>Username:</mat-label>
-    <input type="text" matInput placeholder="Username" />
-  </mat-form-field>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1>Login</h1>
 
-  <mat-form-field>
-    <mat-label>Password:</mat-label>
-    <input type="password" matInput placeholder="Username password"/>
-  </mat-form-field>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" formControlName="username" />
+    </div>
 
-  <button mat-raised-button mat-fla-button color="primary">
-    <mat-icon>person</mat-icon>
-    Login
-  </button>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" formControlName="password" />
+    </div>
 
-  <div class="flex justify-content-end mt-5">
-    <a routerLink="/auth/new-account">Create new account</a>
-  </div>
+    <button mat-raised-button mat-fla-button color="primary">
+      <mat-icon>person</mat-icon>
+      Login
+    </button>
+
+    <div class="flex justify-content-end mt-5">
+      <a routerLink="/auth/new-account">Create new account</a>
+    </div>
+  </form>
 </div>
 

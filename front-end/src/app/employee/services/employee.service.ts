@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, map } from 'rxjs';
 
 import { environment } from '../../../environment';
@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 @Injectable({providedIn: 'root'})
 export class EmployeeService {
   private apiUrl: string = environment.apiUrl
+
+  private headers: HttpHeaders = new HttpHeaders({
+    Authorization: `Bearer ${ localStorage.getItem('token') }`
+  });
 
   constructor(
     private http: HttpClient,
