@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ employee.first_name }} {{ employee.last_name }}</mat-card-title>
+    <mat-card-subtitle>Employee ID: {{ employee.employee_id }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content></mat-card-content>
+
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <button
+      mat-button
+      mat-raised
+      color="primary"
+      [routerLink]="['/employee/edit', employee.employee_id]"
+    >
+      <mat-icon>edit</mat-icon>
+      Edit Employee
+    </button>
+
+    <span class="spacer"></span>
+
+    <button
+      mat-button
+      mat-raised
+      [routerLink]="['/employee', employee.employee_id]"
+    >
+      <mat-icon>more_horiz</mat-icon>
+      More
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,130 @@
+<h1>
+  {{ editEmployee ? 'Edit' : 'Add new' }}
+  Employee
+</h1>
+<mat-divider class="mb-2"></mat-divider>
+
+<div class="grid">
+  <div class="col-12 sm:col-6 sm:col-offset-3">
+    <mat-card>
+      <mat-card-content>
+        <div class="grid">
+          <form class="grid" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                name="first_name"
+                type="text"
+                required
+                formControlName="first_name"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                name="last_name"
+                type="text"
+                required
+                formControlName="last_name"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Employee ID</mat-label>
+              <input
+                matInput
+                name="employee_id"
+                type="text"
+                required
+                formControlName="employee_id"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>CURP</mat-label>
+              <input
+                matInput
+                name="curp"
+                type="text"
+                required
+                formControlName="curp"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>SSN</mat-label>
+              <input
+                matInput
+                name="ssn"
+                type="text"
+                required
+                formControlName="ssn"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Birthday</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                name="birthday"
+                required
+                readonly
+                formControlName="birthday"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker format="YYYY-MM-DD"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Phone Number</mat-label>
+              <input
+                matInput
+                name="phone"
+                type="text"
+                required
+                formControlName="phone"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12 sm:col-6">
+              <mat-label>Nationality</mat-label>
+              <input
+                matInput
+                name="nationality"
+                type="text"
+                required
+                formControlName="nationality"
+              />
+            </mat-form-field>
+
+          </form>
+        </div>
+
+        <div class="flex justify-content-between">
+          <button
+            *ngIf="editEmployee"
+            (click)="onDeleteEmployee()"
+            mat-flat-button
+            color="warn"
+          >
+            Remove
+          </button>
+          <span></span>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="onSubmit()"
+          >
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

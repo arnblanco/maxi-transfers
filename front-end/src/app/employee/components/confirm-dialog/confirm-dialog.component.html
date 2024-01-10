@@ -1,0 +1,8 @@
+<h1>Confirm to Delete Employee</h1>
+<div mat-dialog-content>
+  <p>The employee and all its beneficiaries will be eliminated.</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="deleteEmployee()" cdkFocusInitial color="warn">Delete</button>
+</div>

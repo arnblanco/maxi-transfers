@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: db
+    build:
+      context: ./db
+      dockerfile: Dockerfile.dev
+    environment:
+      SA_PASSWORD: MaxiTransfers2023
+      ACCEPT_EULA: Y
+      MSSQL_DB: maxitransfers
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    volumes:
+      - ./back-end:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  
+  frontend:
+    container_name: frontend
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./front-end:/app
+    ports:
+      - "4200:4200" 
+      - "49153:49153" 
+    env_file:
+      - ./.env.dev

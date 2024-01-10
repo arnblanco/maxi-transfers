@@ -1,0 +1,26 @@
+<ng-template #divLoading>
+  <mat-grid-list cols="1">
+    <mat-grid-tile>
+      <mat-spinner></mat-spinner>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-template>
+
+<div *ngIf="employee; else divLoading" class="grid">
+  <mat-card class="col-12 sm:col-3 mt-4 p-3">
+    <mat-card-header>
+      <mat-card-title>{{ employee.first_name }} {{ employee.last_name }}</mat-card-title>
+      <mat-card-subtitle>Employee ID: {{ employee.employee_id }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        <strong>Birthday</strong>: {{ employee.birthday }}<br>
+        <strong>Curp</strong>: {{ employee.curp }}<br>
+        <strong>Ssn</strong>: {{ employee.ssn }}<br>
+        <strong>Phone Number</strong>: {{ employee.phone }}<br>
+        <strong>Nationality</strong>: {{ employee.nationality }}<br>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

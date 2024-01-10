@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, of, map } from 'rxjs';
+
+import { environment } from '../../../environment';
+
+import { Employee } from '../interfaces/employee.interface';
+import { Router } from '@angular/router';
+
+
+@Injectable({providedIn: 'root'})
+export class EmployeeService {
+  private apiUrl: string = environment.apiUrl
+
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
+
+  getEmployee():Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${ this.apiUrl }/employee`)
+  }
+
+  getEmployeeById(id: number): Observable<Employee | undefined> {
+    return this.http.get<Employee>(`${ this.apiUrl }/employee/${ id }`)
+      .pipe(
+        catchError((error: HttpErrorResponse)=> {
+          if(error.status === 404) {
+            this.router.navigate(['/404'])
+            return of(undefined)
+          } else if (error.status === 401) {
+            this.router.navigate(['/auth/login'])
+            return of(undefined)
+          } else {
+            this.router.navigate(['/404'])
+            return of(undefined)
+          }
+        })
+      )
+  }
+
+  addEmployee( employee:Employee ): Observable<Employee> {
+    return this.http.post<Employee>(`${ this.apiUrl }/employee`, employee)
+  }
+
+  updateEmployee( employee:Employee ): Observable<Employee> {
+    return this.http.patch<Employee>(`${ this.apiUrl }/employee/${ employee.employee_id }`, employee)
+  }
+
+  deleteEmployee( employee_id: number ): Observable<boolean> {
+    return this.http.delete(`${ this.apiUrl }/employee/${ employee_id }`)
+      .pipe(
+        map( resp => true ),
+        catchError( err => of(false))
+      )
+  }
+
+}

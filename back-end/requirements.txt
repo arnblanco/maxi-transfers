@@ -1,0 +1,8 @@
+fastapi
+gunicorn
+pyodbc
+python-dotenv
+SQLAlchemy
+passlib
+PyJWT
+python-dateutil
