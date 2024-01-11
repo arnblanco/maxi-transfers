@@ -5,7 +5,7 @@ services:
     container_name: db
     build:
       context: ./db
-      dockerfile: Dockerfile.dev
+      dockerfile: dockerfile.dev
     environment:
       SA_PASSWORD: MaxiTransfers2023
       ACCEPT_EULA: Y
@@ -13,7 +13,12 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./data:/var/opt/mssql/data
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd localhost -U sa -P MaxiTransfers2023 -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
