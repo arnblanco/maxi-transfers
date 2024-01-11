@@ -5,22 +5,9 @@ CREATE PROCEDURE GetUserByUsername
     @username NVARCHAR(50)
 AS
 BEGIN
-    DECLARE @first_name NVARCHAR(50), 
-            @last_name NVARCHAR(50), 
-            @email NVARCHAR(100), 
-            @is_active BIT,
-            @password NVARCHAR(255);
-
-    SELECT 
-        @first_name = first_name,
-        @last_name = last_name,
-        @email = email,
-        @is_active = is_active,
-        @password = password
+    SELECT first_name, last_name, email, username, is_active, password
     FROM users
     WHERE username = @username;
-
-    SELECT @first_name AS first_name, @last_name AS last_name, @email AS email, @is_active AS is_active, @password AS password;
 END;
 GO
 
