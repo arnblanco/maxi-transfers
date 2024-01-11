@@ -6,3 +6,4 @@ SQLAlchemy
 passlib
 PyJWT
 python-dateutil
+pytest

@@ -44,7 +44,7 @@ class UpdateEmployeeRequest(BaseModel):
     last_name: constr(min_length=3, max_length=50) = Field(..., description="Employee Last Name")
     birthday: str = Field(..., description="Employee Birthday")
     curp: constr(min_length=18, max_length=18) = Field(..., description="Employee CURP.")
-    ssn: constr(min_length=6, max_length=12) = Field(..., description="Employee SSN.")
+    ssn: constr(min_length=6, max_length=16) = Field(..., description="Employee SSN.")
     phone: constr(min_length=10, max_length=10) = Field(..., description="Employee Phone Number.")
     nationality: str = Field(..., description="Employee Nationality.")
 
@@ -69,7 +69,7 @@ class CreateBeneficiaryRequest(BaseModel):
     last_name: constr(min_length=3, max_length=50) = Field(..., description="Beneficiary Last Name")
     birthday: str = Field(..., description="Beneficiary Birthday")
     curp: constr(min_length=18, max_length=18) = Field(..., description="Beneficiary CURP.")
-    ssn: constr(min_length=6, max_length=12) = Field(..., description="Beneficiary SSN.")
+    ssn: constr(min_length=6, max_length=16) = Field(..., description="Beneficiary SSN.")
     phone: constr(min_length=10, max_length=10) = Field(..., description="Beneficiary Phone Number.")
     nationality: str = Field(..., description="Beneficiary Nationality.")
     percentage: conint(ge=1, le=100) = Field(..., description="Beneficiary Percent.")
