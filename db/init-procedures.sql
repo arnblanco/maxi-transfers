@@ -1,11 +1,28 @@
+USE maxitransfers;
+GO
+
 CREATE PROCEDURE GetUserByUsername
     @username NVARCHAR(50)
 AS
 BEGIN
-    SELECT first_name, last_name, email, username, is_active, password
+    DECLARE @first_name NVARCHAR(50), 
+            @last_name NVARCHAR(50), 
+            @email NVARCHAR(100), 
+            @is_active BIT,
+            @password NVARCHAR(255);
+
+    SELECT 
+        @first_name = first_name,
+        @last_name = last_name,
+        @email = email,
+        @is_active = is_active,
+        @password = password
     FROM users
     WHERE username = @username;
+
+    SELECT @first_name AS first_name, @last_name AS last_name, @email AS email, @is_active AS is_active, @password AS password;
 END;
+GO
 
 CREATE PROCEDURE InsertUser
     @first_name NVARCHAR(50),
@@ -19,6 +36,7 @@ BEGIN
     INSERT INTO users (first_name, last_name, email, username, password, is_active)
     VALUES (@first_name, @last_name, @email, @username, @password, @is_active);
 END;
+GO
 
 CREATE PROCEDURE UpdateUser
     @email NVARCHAR(100),
@@ -37,6 +55,7 @@ BEGIN
         email = @email AND
         username = @username;
 END;
+GO
 
 CREATE PROCEDURE DeleteUser
     @email NVARCHAR(100),
@@ -46,6 +65,7 @@ BEGIN
     DELETE FROM users
     WHERE email = @email AND username = @username;
 END;
+GO
 
 CREATE PROCEDURE GetEmployees
 AS
@@ -62,6 +82,7 @@ BEGIN
         GROUP BY employee_id
     ) b ON e.employee_id = b.employee_id;
 END;
+GO
 
 CREATE PROCEDURE GetEmployeeById
     @employee_id INT
@@ -80,6 +101,7 @@ BEGIN
     ) b_count ON e.employee_id = b_count.employee_id
     WHERE e.employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE InsertEmployee
     @first_name NVARCHAR(50),
@@ -95,6 +117,7 @@ BEGIN
     INSERT INTO employee (first_name, last_name, birthday, employee_id, curp, ssn, phone, nationality)
     VALUES (@first_name, @last_name, @birthday, @employee_id, @curp, @ssn, @phone, @nationality);
 END;
+GO
 
 CREATE PROCEDURE UpdateEmployee
     @employee_id INT,
@@ -119,6 +142,7 @@ BEGIN
     WHERE
         employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE DeleteEmployee
     @employee_id INT
@@ -127,6 +151,7 @@ BEGIN
     DELETE FROM employee
     WHERE employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE GetBeneficiariesByEmployeeId
     @employee_id INT
@@ -136,6 +161,7 @@ BEGIN
     FROM beneficiaries
     WHERE employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE GetBeneficiary
     @curp NVARCHAR(18),
@@ -146,6 +172,7 @@ BEGIN
     FROM beneficiaries
     WHERE curp = @curp AND employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE InsertBeneficiary
     @first_name NVARCHAR(50),
@@ -182,6 +209,7 @@ BEGIN
         @employee_id
     );
 END;
+GO
 
 CREATE PROCEDURE UpdateBeneficiary
     @first_name NVARCHAR(50),
@@ -208,6 +236,7 @@ BEGIN
         employee_id = @employee_id
     WHERE curp = @curp AND employee_id = @employee_id;
 END;
+GO
 
 CREATE PROCEDURE DeleteBeneficiary
     @employee_id INT,
@@ -217,3 +246,4 @@ BEGIN
     DELETE FROM beneficiaries
     WHERE curp = @curp AND employee_id = @employee_id;
 END;
+GO

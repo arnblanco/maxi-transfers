@@ -1,4 +1,5 @@
 USE maxitransfers;
+GO
 
 CREATE TABLE users (
     first_name NVARCHAR(50),
@@ -9,6 +10,7 @@ CREATE TABLE users (
     is_active BIT,
     PRIMARY KEY (email, username)
 );
+GO
 
 CREATE TABLE employee (
     first_name NVARCHAR(50),
@@ -22,6 +24,7 @@ CREATE TABLE employee (
 
     CONSTRAINT PK_Employee PRIMARY KEY (employee_id)
 );
+GO
 
 CREATE TABLE beneficiaries (
     first_name NVARCHAR(50),
@@ -37,3 +40,4 @@ CREATE TABLE beneficiaries (
 
     CONSTRAINT PK_Beneficiary PRIMARY KEY (employee_id, curp)
 );
+GO
