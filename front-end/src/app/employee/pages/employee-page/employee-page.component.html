@@ -23,4 +23,59 @@
       </p>
     </mat-card-content>
   </mat-card>
+
+  <div *ngIf="beneficiaries; else divLoading" class="col-12 sm:col-9 mt-3 p-9">
+    <button
+      mat-flat-button
+      color="primary"
+      [routerLink]="['/employee', employee.employee_id, 'beneficiary']"
+    >
+    <mat-icon>person_add</mat-icon>
+      Add new Beneficiary
+    </button>
+
+    <table mat-table [dataSource]="beneficiaries" class="mat-elevation-z8 mt-5">
+      <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element">{{ element.first_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element">{{ element.last_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="curp">
+        <th mat-header-cell *matHeaderCellDef> Curp </th>
+        <td mat-cell *matCellDef="let element">{{ element.curp }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ssn">
+        <th mat-header-cell *matHeaderCellDef> SSN </th>
+        <td mat-cell *matCellDef="let element">{{ element.ssn }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+        <td mat-cell *matCellDef="let element">{{ element.phone }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef> Percentage </th>
+        <td mat-cell *matCellDef="let element">{{ element.percentage }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="onRowClick(element)">
+            <mat-icon>link</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>

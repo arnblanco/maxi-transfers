@@ -28,6 +28,7 @@ class EmployeeResponse(BaseModel):
 
 
 class BeneficiaryResponse(BaseModel):
+    employee_id: int
     first_name: str
     last_name: str
     birthday: date

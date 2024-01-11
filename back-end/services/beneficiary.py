@@ -22,6 +22,7 @@ class BeneficiaryService:
             phone=beneficiary[5],
             nationality=beneficiary[6],
             percentage=beneficiary[7],
+            employee_id=beneficiary[8],
         )
 
     async def get_beneficiary_by_curp(self, curp, employee_id, format: bool = True)-> BeneficiaryResponse:
@@ -100,14 +101,14 @@ class BeneficiaryService:
         except Exception as error:
             raise DatabaseSQLErrorException
 
-    async def delete_beneficiary(self, req):
+    async def delete_beneficiary(self, employee_id, curp):
         try:
-            beneficiary = await self.get_beneficiary_by_curp(req.curp, req.employee_id)
-            
+            beneficiary = await self.get_beneficiary_by_curp(curp, employee_id)
+
             with connect() as conn:
                 result = conn.execute(
                     text("EXEC DeleteBeneficiary :employee_id, :curp"),
-                    {"employee_id": req.employee_id, "curp": req.curp},
+                    {"employee_id": employee_id, "curp": curp},
                 )
                 conn.commit()
 

@@ -89,6 +89,11 @@ class CreateBeneficiaryRequest(BaseModel):
         return value
 
 
+class getBeneficiaryRequest(BaseModel):
+    id: int
+    curp: constr(min_length=18, max_length=18) = Field(..., description="Beneficiary CURP.")
+
+
 class DeleteBeneficiaryRequest(BaseModel):
     employee_id: int
     curp: constr(min_length=18, max_length=18) = Field(..., description="Beneficiary CURP.")

@@ -8,9 +8,11 @@ import { EmployeePageComponent } from './pages/employee-page/employee-page.compo
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { NewPageComponent } from './pages/new-page/new-page.component';
+import { NewBeneficiaryComponent } from './pages/new-beneficiary/new-beneficiary.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { CardComponent } from './components/card/card.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     LayoutPageComponent,
     ListPageComponent,
     NewPageComponent,
+    NewBeneficiaryComponent,
     SearchPageComponent,
     CardComponent,
     ConfirmDialogComponent

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Employee } from '../../interfaces/employee.interface'
+import { Employee, Beneficiaries } from '../../interfaces/employee.interface'
 import { EmployeeService } from '../../services/employee.service'
-import { switchMap } from 'rxjs';
+import { forkJoin, switchMap, tap } from 'rxjs';
 
 
 @Component({
@@ -12,7 +12,9 @@ import { switchMap } from 'rxjs';
   styles: ``
 })
 export class EmployeePageComponent implements OnInit {
+  displayedColumns: string[] = ['first_name', 'last_name', 'curp', 'ssn', 'phone', 'percentage', 'actions'];
   public employee?: Employee;
+  public beneficiaries?: Beneficiaries[];
 
   constructor(
     private employeeService: EmployeeService,
@@ -24,14 +26,22 @@ export class EmployeePageComponent implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap(
-          ({ id }) => this.employeeService.getEmployeeById( id )
+          ({ id }) => forkJoin([
+            this.employeeService.getEmployeeById( id ),
+            this.employeeService.getEmployeeBeneficiaries( id )
+          ])
         )
       )
       .subscribe(
-        employee => {
-          this.employee = employee
+        ([employee, beneficiaries]) => {
+          this.employee = employee;
+          this.beneficiaries = beneficiaries;
           return;
         }
       )
+  }
+
+  onRowClick(element: Beneficiaries): void {
+    this.router.navigate(['/employee', element.employee_id, 'beneficiary', element.curp, 'edit' ]);
   }
 }

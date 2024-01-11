@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from typing import List
 
 from app.request import CreateUserRequestSchema, LoginRequest, CreateEmployeeRequest, \
-    UpdateEmployeeRequest, CreateBeneficiaryRequest, DeleteBeneficiaryRequest
+    UpdateEmployeeRequest, CreateBeneficiaryRequest, DeleteBeneficiaryRequest, getBeneficiaryRequest
 from app.response import CreateUserResponseSchema, LoginResponse, EmployeeResponse, \
     BeneficiaryResponse
 from core import create_app
@@ -15,7 +15,6 @@ from services import UserService, EmployeeService, BeneficiaryService
 
 #Start FastApi application
 app = create_app()
-
 
 
 @app.get('/')
@@ -50,7 +49,7 @@ async def signup(
 @app.get(
     "/employee",
     response_model=List[EmployeeResponse],
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def get_employee(
     request: Request,
@@ -62,20 +61,19 @@ async def get_employee(
 @app.post(
     "/employee",
     response_model=EmployeeResponse,
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def post_employee(
     request: CreateEmployeeRequest,
     service: EmployeeService = Depends(EmployeeService)
 ):
     request.birthday = parser.parse(request.birthday)
-    print(request)
     return await service.create_employee(request)
 
 @app.get(
     "/employee/{employee_id}",
     response_model=EmployeeResponse,
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def get_employee(
     employee_id: int,
@@ -86,7 +84,7 @@ async def get_employee(
 @app.patch(
     "/employee/{employee_id}",
     response_model=EmployeeResponse,
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def edit_employee(
     employee_id: int,
@@ -97,7 +95,7 @@ async def edit_employee(
 
 @app.delete(
     "/employee/{employee_id}",
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def delete_employee(
     employee_id: int,
@@ -108,7 +106,7 @@ async def delete_employee(
 @app.get(
     "/employee/{employee_id}/beneficiaries",
     response_model=List[BeneficiaryResponse],
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def get_employee_beneficiaries(
     employee_id: int,
@@ -119,7 +117,7 @@ async def get_employee_beneficiaries(
 @app.post(
     "/beneficiary",
     response_model=BeneficiaryResponse,
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def post_beneficiary(
     request: CreateBeneficiaryRequest,
@@ -130,7 +128,7 @@ async def post_beneficiary(
 @app.patch(
     "/beneficiary",
     response_model=BeneficiaryResponse,
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def patch_beneficiary(
     request: CreateBeneficiaryRequest,
@@ -140,11 +138,25 @@ async def patch_beneficiary(
 
 
 @app.delete(
-    "/beneficiary",
-    #dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+    "/beneficiary/{employe_id}/{curp}",
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
 )
 async def delete_beneficiary(
-    request: DeleteBeneficiaryRequest,
+    employe_id: int,
+    curp: str,
     service: BeneficiaryService = Depends(BeneficiaryService)
 ):
-    return await service.delete_beneficiary(request)
+    return await service.delete_beneficiary(employe_id, curp)
+
+
+@app.get(
+    "/beneficiary/{employe_id}/{curp}",
+    response_model=BeneficiaryResponse,
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))],
+)
+async def get_beneficiary(
+    employe_id: int,
+    curp: str,
+    service: BeneficiaryService = Depends(BeneficiaryService)
+):
+    return await service.get_beneficiary_by_curp(curp, employe_id)
