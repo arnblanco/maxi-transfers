@@ -19,8 +19,6 @@ app = create_app()
 
 @app.get('/')
 def index(request: Request): 
-    engine = connect()
-
     return JSONResponse(content={ "msg": f"Welcome to MaxiTransfers Api!" })
 
 
