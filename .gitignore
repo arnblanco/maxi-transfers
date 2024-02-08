@@ -67,3 +67,6 @@ dist/
 build/
 eggs/
 docs/_build/
+
+# Node.js dependencies
+node_modules/
